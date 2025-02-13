@@ -7,16 +7,16 @@ import NavigationStack from "./src/navigation/NavigationStack";
 
 export default function App() {
   return (
-    // <Provider store={store}>
-    //   <StatusBar
-    //     barStyle={"dark-content"}
-    //     backgroundColor="transparent"
-    //     translucent
-    //   />
-    // </Provider>
-    <NavigationContainer>
-      <NavigationStack />
-    </NavigationContainer>
+    <Provider store={store}>
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor="transparent"
+        translucent
+      />
+      <NavigationContainer>
+        <NavigationStack />
+      </NavigationContainer>
+    </Provider>
   );
 }
 
