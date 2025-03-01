@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SplashScreen from "../../SplashScreen/SplashScreen";
-import HomeScreen from "../view/HomeScreen";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -13,22 +12,15 @@ import {
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelector } from "../redux/reducers/authReducer";
+import HomeScreen from "../view/tabScreen/HomeScreen";
+import ManageScreen from "../view/tabScreen/ManageScreen";
+import AccountScreen from "../view/tabScreen/AccountScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { ChatBotAI } from "../view/tabScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
-
-const MainNavigator = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="TabNavigationContainer"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
-  );
-};
-
-
+const Tab = createBottomTabNavigator();
 
 const AuthenNavigation = () => {
   return (
@@ -56,6 +48,89 @@ const AuthenNavigation = () => {
       <Stack.Screen
         name="ResetPassword"
         component={ResetPassword}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const TabNavigationContainer = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: "Trang chủ",
+          tabBarIcon: ({ color, size }) => {
+            return <Ionicons name="home-outline" size={size} color={color} />;
+          },
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="ManageScreen"
+        component={ManageScreen}
+        options={{
+          tabBarLabel: "Quản lý",
+          tabBarIcon: ({ color, size }) => {
+            return <Ionicons name="reader-outline" size={size} color={color} />;
+          },
+          headerShown: false,
+        }}
+      />
+      {/* chatbot */}
+      <Tab.Screen
+        name="ChatBotAI"
+        component={ChatBotAI}
+        options={{
+          tabBarLabel: "ChatBot",
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <Ionicons name="chatbubbles-outline" size={size} color={color} />
+            );
+          },
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Account"
+        component={AccountNavigation}
+        options={{
+          tabBarLabel: "Tài khoản",
+          tabBarIcon: ({ color, size }) => {
+            return <Ionicons name="person-outline" size={size} color={color} />;
+          },
+          headerShown: false,
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
+const AccountNavigation = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="AccountScreen"
+        component={AccountScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ResetPassword}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const MainNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="TabNavigationContainer"
+        component={TabNavigationContainer}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -93,14 +168,16 @@ const NavigationStack = () => {
 
   return (
     <>
-      {isShowSplash ? (
+      {/* {isShowSplash ? (
         <SplashScreen />
       ) : auth.accesstoken ? (
         <MainNavigator />
       ) : (
         <AuthenNavigation />
-      )}
-      {/* {isShowSplash ? <SplashScreen /> : <AuthenNavigation />} */}
+      )} */}
+
+      <MainNavigator />
+      {/* <AuthenNavigation /> */}
     </>
   );
 };

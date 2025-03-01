@@ -1,4 +1,3 @@
-
 import {
   StyleSheet,
   Text,
@@ -17,30 +16,21 @@ import { useDispatch } from "react-redux";
 import { addAuth } from "../../redux/reducers/authReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-
-
 const SignIn = ({ navigation }) => {
   // Switch
   const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setPasswordVisible] = useState(false); //password co the nhin thay duoc mac dinh la false
   const [loading, setLoading] = useState(false);
-
-
 
   const dispatch = useDispatch();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!isPasswordVisible);
   };
-
-
-
-
 
   const handleLogin = async () => {
     const emailValidate = Validate.email(email);
@@ -59,15 +49,18 @@ const SignIn = ({ navigation }) => {
 
     try {
       setLoading(true);
-      const res = await authentication.HandleAuthentication("/login", { email, password }, "post")
+      const res = await authentication.HandleAuthentication(
+        "/login",
+        { email, password },
+        "post"
+      );
 
       dispatch(addAuth(res.data));
 
       await AsyncStorage.setItem(
-        'auth',
+        "auth",
         // isRemember ? JSON.stringify(res.data) : email,
         JSON.stringify(res.data)
-
       );
       setLoading(false);
     } catch (error) {
@@ -80,8 +73,7 @@ const SignIn = ({ navigation }) => {
     } finally {
       setLoading(false);
     }
-
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -284,78 +276,17 @@ const SignIn = ({ navigation }) => {
           >
             <Text style={{ color: "white", fontSize: 18 }}>Đăng nhập</Text>
           </TouchableOpacity>
-          <Text
-            style={{
-              color: "gray",
-              fontWeight: "bold",
-              fontSize: 18,
-              marginTop: 35,
-            }}
-          >
-            Hoặc
-          </Text>
-          <TouchableOpacity
-            style={{
-              width: "100%",
-              height: 50,
-              borderRadius: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: 12,
-              flexDirection: "row",
-              borderWidth: 1,
-              borderColor: "gray",
-            }}
-            onPress={() => promptAsync()}
-          >
-            <View
-              style={{
-                flex: 3,
-                alignItems: "center",
-              }}
-            >
-              <Image
-                source={require("../../img/imgAuth/google.png")}
-                style={{ width: 32, height: 32, resizeMode: "contain" }}
-              />
-            </View>
-            <View style={{ flex: 7 }}>
-              <Text style={{ fontSize: 18 }}>Đăng nhập với Google</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              width: "100%",
-              height: 50,
-              borderRadius: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: 12,
-              flexDirection: "row",
-              borderWidth: 1,
-              borderColor: "gray",
-            }}
-            onPress={() => promptAsyncFacebook()}
-          >
-            <View
-              style={{
-                flex: 3,
-                alignItems: "center",
-              }}
-            >
-              <Image
-                source={require("../../img/imgAuth/fb.png")}
-                style={{ width: 32, height: 32, resizeMode: "contain" }}
-              />
-            </View>
-            <View style={{ flex: 7 }}>
-              <Text style={{ fontSize: 18 }}>Đăng nhập với Facebook</Text>
-            </View>
-          </TouchableOpacity>
+
           <Text style={{ fontSize: 16, marginTop: 8 }}>
             Bạn chưa có tài khoản?
             <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-              <Text style={{ color: "#5669fe", fontSize: 16, marginLeft: 5 }}>
+              <Text
+                style={{
+                  color: "#5669fe",
+                  fontSize: 16,
+                  marginLeft: 5,
+                }}
+              >
                 Đăng ký
               </Text>
             </TouchableOpacity>
@@ -364,10 +295,7 @@ const SignIn = ({ navigation }) => {
       </View>
     </View>
   );
-
-
 };
-
 
 export default SignIn;
 

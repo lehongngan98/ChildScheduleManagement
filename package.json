@@ -36,7 +36,8 @@
     "react-native-web": "~0.19.13",
     "react-redux": "^9.1.2",
     "typescript": "~5.3.3",
-    "upgrade": "^1.1.0"
+    "upgrade": "^1.1.0",
+    "react-native-event-listeners": "^1.0.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
