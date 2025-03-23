@@ -15,23 +15,24 @@ import HeaderScreen from "../../components/header/HeaderScreen";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Platform } from "react-native";
 
-const data = [
-  {
-    id: "1",
-    subject: "Tiếng Việt",
-    lesson: "1 - 3",
-    teacher: "Nguyễn Văn A",
-    type: "lichhoc",
-  },
-  {
-    id: "2",
-    subject: "Tiếng Anh",
-    lesson: "4 - 6",
-    teacher: "Nguyễn Văn C",
-    type: "lichthi",
-  },
-];
 const ScheduleScreen = ({ navigation }) => {
+  const data = [
+    {
+      id: "1",
+      subject: "Tiếng Việt",
+      lesson: "1 - 3",
+      teacher: "Nguyễn Văn A",
+      type: "lichhoc",
+    },
+    {
+      id: "2",
+      subject: "Tiếng Anh",
+      lesson: "4 - 6",
+      teacher: "Nguyễn Văn C",
+      type: "lichthi",
+    },
+  ];
+
   const theme = useContext(themeContext);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("Nguyễn Văn Y");
@@ -42,6 +43,7 @@ const ScheduleScreen = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
   const [viewMode, setViewMode] = useState("Ngày");
+  const [schedules, setSchedules] = useState([]);
 
   const onChangeDate = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -83,108 +85,127 @@ const ScheduleScreen = ({ navigation }) => {
         }}
       />
 
-      <View style={styles.container}>
-        {/* Date dropdown & buttons */}
-        <View style={{ flex: 1.8 }}>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex: 2 }}>
-              <TouchableOpacity
-                onPress={() => setShowPicker(!showPicker)}
-                style={styles.datePicker}
-              >
-                <Text>
-                  Ngày {date.getDate()}, Tháng {date.getMonth() + 1},{" "}
-                  {date.getFullYear()}
-                </Text>
-                <Ionicons name="chevron-down" size={20} />
-              </TouchableOpacity>
+      {data.length === 0 ? (
+        <View style={styles.noScheduleContainer}>
+          <Image
+            source={require("../../img/imgTab/noSchedule.png")}
+            style={styles.image}
+          />
+          <Text style={styles.noText}>
+            Hiện tại không có thời khóa biểu nào
+          </Text>
+          <Text style={styles.noText}>bạn hãy tạo thời khóa biểu cho trẻ</Text>
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => navigation.navigate("AddSchedule")}
+          >
+            <Text style={styles.addButtonText}>THÊM THỜI KHÓA BIỂU MỚI</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.container}>
+          {/* Date dropdown & buttons */}
+          <View style={{ flex: 1.8 }}>
+            <View style={{ flexDirection: "row" }}>
+              <View style={{ flex: 2 }}>
+                <TouchableOpacity
+                  onPress={() => setShowPicker(!showPicker)}
+                  style={styles.datePicker}
+                >
+                  <Text>
+                    Ngày {date.getDate()}, Tháng {date.getMonth() + 1},{" "}
+                    {date.getFullYear()}
+                  </Text>
+                  <Ionicons name="chevron-down" size={20} />
+                </TouchableOpacity>
+              </View>
+
+              <View style={{ flex: 1 }}>
+                <View style={styles.viewModeToggle}>
+                  <TouchableOpacity
+                    onPress={() => setViewMode("Ngày")}
+                    style={[
+                      styles.modeButton,
+                      viewMode === "Ngày" && styles.activeMode,
+                    ]}
+                  >
+                    <Text style={viewMode === "Ngày" && { color: "white" }}>
+                      Ngày
+                    </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    onPress={() => setViewMode("Tháng")}
+                    style={[
+                      styles.modeButton,
+                      viewMode === "Tháng" && styles.activeMode,
+                    ]}
+                  >
+                    <Text style={viewMode === "Tháng" && { color: "white" }}>
+                      Tháng
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
 
-            <View style={{ flex: 1 }}>
-              <View style={styles.viewModeToggle}>
-                <TouchableOpacity
-                  onPress={() => setViewMode("Ngày")}
-                  style={[
-                    styles.modeButton,
-                    viewMode === "Ngày" && styles.activeMode,
-                  ]}
-                >
-                  <Text style={viewMode === "Ngày" && { color: "white" }}>
-                    Ngày
-                  </Text>
-                </TouchableOpacity>
+            {showPicker && (
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={onChangeDate}
+              />
+            )}
 
-                <TouchableOpacity
-                  onPress={() => setViewMode("Tháng")}
-                  style={[
-                    styles.modeButton,
-                    viewMode === "Tháng" && styles.activeMode,
-                  ]}
-                >
-                  <Text style={viewMode === "Tháng" && { color: "white" }}>
-                    Tháng
-                  </Text>
-                </TouchableOpacity>
+            {/* Info text & dropdown */}
+            <View
+              style={{
+                flexDirection: "row",
+                flex: 1.2,
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ fontSize: 16 }}>Thời khóa biểu của:</Text>
+              <DropDownPicker
+                open={open}
+                value={value}
+                items={items}
+                setOpen={setOpen}
+                setValue={setValue}
+                setItems={setItems}
+                style={styles.dropdown}
+                containerStyle={{ width: "60%" }}
+                dropDownContainerStyle={{ zIndex: 1000 }}
+              />
+            </View>
+          </View>
+
+          {/* Lesson cards */}
+          <View style={{ flex: 6.5 }}>
+            <FlatList
+              data={data}
+              keyExtractor={(item) => item.id}
+              renderItem={renderItem}
+            />
+          </View>
+
+          {/* Legend + bottom nav */}
+          <View style={{ flex: 0.7 }}>
+            <View style={styles.legendRow}>
+              <View style={styles.legendItem}>
+                <View style={[styles.circle, { backgroundColor: "cyan" }]} />
+                <Text>lịch học</Text>
+              </View>
+              <View style={styles.legendItem}>
+                <View style={[styles.circle, { backgroundColor: "red" }]} />
+                <Text>lịch thi</Text>
               </View>
             </View>
           </View>
-
-          {showPicker && (
-            <DateTimePicker
-              value={date}
-              mode="date"
-              display="default"
-              onChange={onChangeDate}
-            />
-          )}
-
-          {/* Info text & dropdown */}
-          <View
-            style={{
-              flexDirection: "row",
-              flex: 1.2,
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ fontSize: 16 }}>Thời khóa biểu của:</Text>
-            <DropDownPicker
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-              style={styles.dropdown}
-              containerStyle={{ width: "60%" }}
-              dropDownContainerStyle={{ zIndex: 1000 }}
-            />
-          </View>
         </View>
-
-        {/* Lesson cards */}
-        <View style={{ flex: 6.5 }}>
-          <FlatList
-            data={data}
-            keyExtractor={(item) => item.id}
-            renderItem={renderItem}
-          />
-        </View>
-
-        {/* Legend + bottom nav */}
-        <View style={{ flex: 0.7 }}>
-          <View style={styles.legendRow}>
-            <View style={styles.legendItem}>
-              <View style={[styles.circle, { backgroundColor: "cyan" }]} />
-              <Text>lịch học</Text>
-            </View>
-            <View style={styles.legendItem}>
-              <View style={[styles.circle, { backgroundColor: "red" }]} />
-              <Text>lịch thi</Text>
-            </View>
-          </View>
-        </View>
-      </View>
+      )}
     </PaperProvider>
   );
 };
@@ -327,5 +348,73 @@ const styles = StyleSheet.create({
   navItem: {
     fontSize: 14,
     color: "#444",
+  },
+  dateBox: {
+    backgroundColor: "#E5E5E5",
+    padding: 12,
+    borderRadius: 8,
+    alignSelf: "flex-start",
+    marginBottom: 16,
+  },
+  dateText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  noScheduleContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 60,
+  },
+  image: {
+    width: 150,
+    height: 150,
+    marginBottom: 16,
+  },
+  noText: {
+    fontSize: 14,
+    textAlign: "center",
+  },
+  addButton: {
+    marginTop: 20,
+    backgroundColor: "#33CC66",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+  },
+  addButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  scheduleList: {
+    marginTop: 20,
+  },
+  card: {
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 12,
+    marginBottom: 16,
+    position: "relative",
+  },
+  typeBar: {
+    width: 8,
+    height: "100%",
+    position: "absolute",
+    right: 4,
+    top: 4,
+    borderRadius: 4,
+  },
+  subject: {
+    fontSize: 18,
+    color: "#00B0FF",
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  lesson: {
+    color: "#000",
+    marginBottom: 4,
+  },
+  teacher: {
+    color: "green",
   },
 });
