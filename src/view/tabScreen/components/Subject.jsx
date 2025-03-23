@@ -18,7 +18,7 @@ const Subject = () => {
   const handleNavigationSubjects = (id) => {
     switch (id) {
       case 1:
-        navigation.navigate("BaiTapNavigation");
+        navigation.navigate("ScheduleNavigation");
         break;
       case 2:
         navigation.navigate("TinTucNavigation");
@@ -32,23 +32,22 @@ const Subject = () => {
   const listSubjects = ({ item }) => (
     <View
       style={{
-        width: 90,
-        height: 70,
+        width: 130,
+        height: 120,
         justifyContent: "center",
         alignItems: "center",
         marginHorizontal: 4,
-        marginVertical: 5,
       }}
     >
       <TouchableOpacity onPress={() => handleNavigationSubjects(item.id)}>
         <Image
           source={item.image}
-          style={{ width: 45, height: 45, resizeMode: "contain" }}
+          style={{ width: 55, height: 55, resizeMode: "contain" }}
         />
       </TouchableOpacity>
       <Text
         style={{
-          fontSize: 15,
+          fontSize: 16,
           marginTop: 5,
           textAlign: "center",
           color: theme.color,
@@ -63,50 +62,30 @@ const Subject = () => {
     <View style={{ flex: 1 }}>
       <View
         style={{
-          width: "100%",
-          height: 320,
+          flex: 1,
           justifyContent: "center",
-          alignItems: "center",
-          borderBottomWidth: 1,
-          borderColor: theme.border,
         }}
       >
-        <View style={{ width: "95%", height: "100%" }}>
-          <View
-            style={{
-              flex: 2,
-              flexDirection: "row",
-            }}
-          >
-            <View
-              style={{
-                flex: 6.5,
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 18,
-                  marginLeft: 10,
-                  color: theme.color,
-                }}
-              >
-                Nguồn học
-              </Text>
-            </View>
-          </View>
-          <View style={{ flex: 8 }}>
-            <FlatList
-              keyExtractor={(item) => item.id}
-              numColumns={4}
-              horizontal={false}
-              renderItem={listSubjects}
-              data={Subjects}
-              scrollEnabled={false}
-            />
-          </View>
-        </View>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: 20,
+            marginLeft: 17,
+            color: theme.color,
+          }}
+        >
+          Chức năng
+        </Text>
+      </View>
+      <View style={{ flex: 9 }}>
+        <FlatList
+          keyExtractor={(item) => item.id}
+          numColumns={3}
+          horizontal={false}
+          renderItem={listSubjects}
+          data={Subjects}
+          scrollEnabled={false}
+        />
       </View>
     </View>
   );

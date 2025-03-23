@@ -1,10 +1,15 @@
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useContext } from "react";
 import { Appbar, PaperProvider } from "react-native-paper";
 import themeContext from "../../context/themeContext";
-// import Bubble from "../Bubble/Bubble";
-// import DictionarySearch from "./components/DictionarySearch";
 import Subject from "./components/Subject";
+// import Bubble from "../Bubble/Bubble";
 
 const HomeScreen = () => {
   const theme = useContext(themeContext);
@@ -24,7 +29,7 @@ const HomeScreen = () => {
           }}
         >
           <Text style={{ fontWeight: "bold", fontSize: 30, color: "#3B7DED" }}>
-            CMS
+            Enggo
           </Text>
         </View>
 
@@ -33,22 +38,12 @@ const HomeScreen = () => {
         </TouchableOpacity>
       </Appbar.Header>
 
-      <View style={{ flex: 1.2, backgroundColor: theme.background }}>
-        {/* search bar */}
-        {/* <DictionarySearch /> */}
-      </View>
+      <View style={{ flex: 1 }}>
+        {/* Subject */}
+        <Subject />
 
-      <View style={{ flex: 8.8 }}>
-        <ScrollView
-          style={{ backgroundColor: theme.background }}
-          keyboardShouldPersistTaps="handled"
-        >
-          {/* Subject */}
-          <Subject />
-
-          {/* bubble */}
-          {/* <Bubble /> */}
-        </ScrollView>
+        {/* bubble */}
+        {/* <Bubble /> */}
       </View>
     </PaperProvider>
   );
