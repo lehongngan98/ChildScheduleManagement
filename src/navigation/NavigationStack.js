@@ -19,6 +19,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ChatBotAI } from "../view/tabScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { AddSchedule, ScheduleScreen } from "../view/schedule";
+import ActivitiesScreen from "../view/activities/ActivitiesScreen";
+import AddActivities from "../view/activities/AddActivities";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -126,6 +128,23 @@ const ScheduleNavigation = () => {
   );
 };
 
+const ActivitiesNavigation = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ActivitiesScreen"
+        component={ActivitiesScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddActivities"
+        component={AddActivities}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const AccountNavigation = () => {
   return (
     <Stack.Navigator>
@@ -155,6 +174,12 @@ const MainNavigator = () => {
       <Stack.Screen
         name="ScheduleNavigation"
         component={ScheduleNavigation}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="ActivitiesNavigation"
+        component={ActivitiesNavigation}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

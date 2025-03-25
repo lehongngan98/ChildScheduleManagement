@@ -17,20 +17,20 @@ import { Platform } from "react-native";
 
 const ScheduleScreen = ({ navigation }) => {
   const data = [
-    {
-      id: "1",
-      subject: "Tiếng Việt",
-      lesson: "1 - 3",
-      teacher: "Nguyễn Văn A",
-      type: "lichhoc",
-    },
-    {
-      id: "2",
-      subject: "Tiếng Anh",
-      lesson: "4 - 6",
-      teacher: "Nguyễn Văn C",
-      type: "lichthi",
-    },
+    // {
+    //   id: "1",
+    //   subject: "Tiếng Việt",
+    //   lesson: "1 - 3",
+    //   teacher: "Nguyễn Văn A",
+    //   type: "lichhoc",
+    // },
+    // {
+    //   id: "2",
+    //   subject: "Tiếng Anh",
+    //   lesson: "4 - 6",
+    //   teacher: "Nguyễn Văn C",
+    //   type: "lichthi",
+    // },
   ];
 
   const theme = useContext(themeContext);
@@ -86,21 +86,48 @@ const ScheduleScreen = ({ navigation }) => {
       />
 
       {data.length === 0 ? (
-        <View style={styles.noScheduleContainer}>
-          <Image
-            source={require("../../img/imgTab/noSchedule.png")}
-            style={styles.image}
-          />
-          <Text style={styles.noText}>
-            Hiện tại không có thời khóa biểu nào
-          </Text>
-          <Text style={styles.noText}>bạn hãy tạo thời khóa biểu cho trẻ</Text>
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={() => navigation.navigate("AddSchedule")}
+        <View style={{ flex: 1 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              height: 100,
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingHorizontal: 10,
+            }}
           >
-            <Text style={styles.addButtonText}>THÊM THỜI KHÓA BIỂU MỚI</Text>
-          </TouchableOpacity>
+            <Text style={{ fontSize: 16 }}>Thời khóa biểu của:</Text>
+            <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              style={styles.dropdown}
+              containerStyle={{ width: "60%" }}
+              dropDownContainerStyle={{ zIndex: 1000 }}
+            />
+          </View>
+          <View style={styles.noScheduleContainer}>
+            <Image
+              source={require("../../img/imgTab/noSchedule.png")}
+              style={styles.image}
+            />
+            <Text style={styles.noText}>
+              Hiện tại không có thời khóa biểu nào
+            </Text>
+            <Text style={styles.noText}>
+              Bạn hãy tạo thời khóa biểu cho trẻ
+            </Text>
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={() => navigation.navigate("AddSchedule")}
+            >
+              <Text style={styles.addButtonText}>THÊM THỜI KHÓA BIỂU MỚI</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       ) : (
         <View style={styles.container}>

@@ -21,7 +21,7 @@ const Subject = () => {
         navigation.navigate("ScheduleNavigation");
         break;
       case 2:
-        navigation.navigate("TinTucNavigation");
+        navigation.navigate("ActivitiesNavigation");
         break;
       default:
         navigation.navigate("Home");

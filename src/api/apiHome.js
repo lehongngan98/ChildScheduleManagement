@@ -2,13 +2,13 @@ export const Subjects = [
   {
     id: 1,
     image: require("../img/imgTab/seeSchedule.png"),
-    name: "Xem lịch trình",
+    name: "Thời khóa biểu",
   },
-  // {
-  //   id: 2,
-  //   image: require("../img/imgTab/planSchedule.png"),
-  //   name: "Lên lịch trình",
-  // },
+  {
+    id: 2,
+    image: require("../img/imgTab/planSchedule.png"),
+    name: "Thời gian biểu",
+  },
   {
     id: 3,
     image: require("../img/imgTab/softSkillDevelopment.png"),
