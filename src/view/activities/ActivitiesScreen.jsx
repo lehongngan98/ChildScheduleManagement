@@ -18,6 +18,12 @@ import { Platform } from "react-native";
 
 const ActivitiesScreen = ({ navigation }) => {
   const theme = useContext(themeContext);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("Nguyễn Văn Y");
+  const [items, setItems] = useState([
+    { label: "Nguyễn Văn Y", value: "Nguyễn Văn Y" },
+    { label: "Nguyễn Thị B", value: "Nguyễn Thị B" },
+  ]);
 
   const activities = [
     {
@@ -42,6 +48,7 @@ const ActivitiesScreen = ({ navigation }) => {
       start: "21 giờ 30 phút",
     },
   ];
+
   return (
     <PaperProvider>
       <HeaderScreen
@@ -52,6 +59,29 @@ const ActivitiesScreen = ({ navigation }) => {
 
       {activities.length === 0 ? (
         <View style={{ flex: 1 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              height: 100,
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingHorizontal: 10,
+            }}
+          >
+            <Text style={{ fontSize: 16 }}>Thời khóa biểu của:</Text>
+            <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              style={styles.dropdown}
+              containerStyle={{ width: "60%" }}
+              dropDownContainerStyle={{ zIndex: 1000 }}
+            />
+          </View>
           <View style={styles.noScheduleContainer}>
             <Image
               source={require("../../img/imgTab/run.png")}
@@ -65,7 +95,7 @@ const ActivitiesScreen = ({ navigation }) => {
             </Text>
             <TouchableOpacity
               style={styles.addButton}
-              onPress={() => navigation.navigate("AddSchedule")}
+              onPress={() => navigation.navigate("AddActivities")}
             >
               <Text style={styles.addButtonText}>THÊM THỜI GIAN BIỂU MỚI</Text>
             </TouchableOpacity>
@@ -73,18 +103,40 @@ const ActivitiesScreen = ({ navigation }) => {
         </View>
       ) : (
         <View style={styles.container}>
-          <Text style={styles.header}>Thời gian biểu của Nguyễn Văn Y</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              height: 80,
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingHorizontal: 10,
+            }}
+          >
+            <Text style={{ fontSize: 16 }}>Thời khóa biểu của:</Text>
+            <DropDownPicker
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems}
+              style={styles.dropdown}
+              containerStyle={{ width: "60%" }}
+              dropDownContainerStyle={{ zIndex: 1000 }}
+            />
+          </View>
           <ScrollView>
             {activities.map((item) => (
               <View key={item.id} style={styles.card}>
                 <Text style={styles.title}>
-                  {item.icon} {item.title}
+                  {item.title} {item.icon}
                 </Text>
-                <Text>
+                <Text style={styles.textActivities}>
                   Thời lượng:{" "}
                   <Text style={{ color: "#33CC66" }}>{item.duration}</Text>
                 </Text>
-                <Text>
+                <Text style={styles.textActivities}>
                   Thời gian bắt đầu:{" "}
                   <Text style={{ color: "#33CC66" }}>{item.start}</Text>
                 </Text>
@@ -110,6 +162,10 @@ const styles = StyleSheet.create({
     height: 150,
     marginBottom: 16,
   },
+  textActivities: {
+    paddingVertical: 5,
+    fontSize: 16,
+  },
   noText: {
     fontSize: 14,
     textAlign: "center",
@@ -125,6 +181,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+  dropdown: {
+    zIndex: 1000,
+    borderColor: "#ccc",
+  },
+
   container: { padding: 16, flex: 1, backgroundColor: "#fff" },
   header: { fontSize: 16, marginBottom: 12, fontWeight: "bold" },
   card: {
@@ -133,11 +194,12 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     padding: 12,
     marginBottom: 12,
+    marginTop: 10,
   },
   title: {
     color: "#00B0FF",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 6,
   },
 });

@@ -17,20 +17,20 @@ import { Platform } from "react-native";
 
 const ScheduleScreen = ({ navigation }) => {
   const data = [
-    // {
-    //   id: "1",
-    //   subject: "Tiếng Việt",
-    //   lesson: "1 - 3",
-    //   teacher: "Nguyễn Văn A",
-    //   type: "lichhoc",
-    // },
-    // {
-    //   id: "2",
-    //   subject: "Tiếng Anh",
-    //   lesson: "4 - 6",
-    //   teacher: "Nguyễn Văn C",
-    //   type: "lichthi",
-    // },
+    {
+      id: "1",
+      subject: "Tiếng Việt",
+      lesson: "1 - 3",
+      teacher: "Nguyễn Văn A",
+      type: "lichhoc",
+    },
+    {
+      id: "2",
+      subject: "Tiếng Anh",
+      lesson: "4 - 6",
+      teacher: "Nguyễn Văn C",
+      type: "lichthi",
+    },
   ];
 
   const theme = useContext(themeContext);
