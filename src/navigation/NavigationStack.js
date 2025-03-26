@@ -19,8 +19,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ChatBotAI } from "../view/tabScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { AddSchedule, ScheduleScreen } from "../view/schedule";
-import ActivitiesScreen from "../view/activities/ActivitiesScreen";
-import AddActivities from "../view/activities/AddActivities";
+import { ActivitiesScreen, AddActivities } from "../view/activities";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

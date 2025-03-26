@@ -12,7 +12,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
 import { Ionicons } from "@expo/vector-icons";
 import themeContext from "../../context/themeContext";
-import { Appbar, PaperProvider } from "react-native-paper";
+import { PaperProvider } from "react-native-paper";
 import HeaderScreen from "../../components/header/HeaderScreen";
 
 const AddSchedule = ({ navigation }) => {
@@ -44,8 +44,6 @@ const AddSchedule = ({ navigation }) => {
 
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
-          <Text style={styles.title}></Text>
-
           {/* Date Picker */}
           <TouchableOpacity
             onPress={() => setShowPicker(!showPicker)}
