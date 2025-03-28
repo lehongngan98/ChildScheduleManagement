@@ -11,6 +11,7 @@ import themeContext from "./src/context/themeContext";
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  // alo alo
 
   useEffect(() => {
     const listener = EventRegister.addEventListener("ChangeTheme", (data) => {
